@@ -5,12 +5,13 @@ type FunnelProps = {
 }
 
 const Funnel = ({ stages }: FunnelProps) => {
-  const max = Math.max(...stages.map((stage) => stage.count)) || 1
+  const maxCount = Math.max(0, ...stages.map((stage) => stage.count))
+  const normalizer = maxCount > 0 ? maxCount : 1
 
   return (
     <div className="funnel">
       {stages.map((stage) => {
-        const widthPercent = Math.max((stage.count / max) * 100, 12)
+        const widthPercent = Math.max((stage.count / normalizer) * 100, 12)
         return (
           <div key={stage.name} className="funnel-step">
             <div className="funnel-header">
